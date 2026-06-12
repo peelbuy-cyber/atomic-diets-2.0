@@ -420,13 +420,15 @@
       });
     });
 
-    // Pro gate (for now: demo placeholder)
-    // Later we will check Firebase user doc pro=true.
-    const isPro = false;
+    // Pro gate (safe MVP)
+// We don't rely on Firebase yet to avoid login crashes.
+// Once Firebase auth + saving are working, we'll set isPro from Firestore.
+let isPro = false;
+try { isPro = false; } catch(e) { isPro = false; }
 
-    if(!isPro){
-      document.getElementById('proGateBox').style.display = 'block';
-    }
+if(!isPro){
+  document.getElementById('proGateBox').style.display = 'block';
+}
 
     // Logout (simple redirect; real auth logout later)
     function logout(){
