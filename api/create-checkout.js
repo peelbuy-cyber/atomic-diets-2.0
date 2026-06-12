@@ -1,40 +1,22 @@
 export default async function handler(req, res) {
-  try {
-    // Only allow POST
-    if (req.method !== "POST") {
-      return res.status(405).json({ error: "Method not allowed" });
-    }
+   ```
+7. Click **Commit changes** → **Commit changes** again
 
-    // Stripe is not available unless the Node environment has it.
-    // We'll use dynamic import to avoid bundling issues.
-    const stripeModule = await import("stripe");
-    const Stripe = stripeModule.default;
+---
 
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+## Where the secret values come from (important)
+After code is in place, you must add these in **Vercel Environment Variables** (not in chat, not in GitHub):
+- `STRIPE_SECRET_KEY`
+- `STRIPE_PRICE_ID_MONTHLY`
+- `STRIPE_PRICE_ID_YEARLY`
+- `BASE_URL`
 
-    const { plan, userId } = req.body || {};
+(We’ll do that later when you’re at deployment stage.)
 
-    if (!plan || (plan !== "monthly" && plan !== "yearly")) {
-      return res.status(400).json({ error: "Invalid plan" });
-    }
+---
 
-    // Your Stripe Price IDs must be provided via environment variables.
-    // We'll add these later in Vercel after we create Stripe Products.
-    const PRICE_ID_MONTHLY = process.env.STRIPE_PRICE_ID_MONTHLY;
-    const PRICE_ID_YEARLY = process.env.STRIPE_PRICE_ID_YEARLY;
-
-    if (!PRICE_ID_MONTHLY || !PRICE_ID_YEARLY) {
-      return res.status(500).json({ error: "Missing Stripe Price IDs in environment variables." });
-    }
-
-    const priceId = plan === "yearly" ? PRICE_ID_YEARLY : PRICE_ID_MONTHLY;
-
-    // Create checkout session
-    const session = await stripe.checkout.sessions.create({
-      mode: "subscription",
-      line_items: [{ price: priceId, quantity: 1 }],
-      allow_promotion_codes: true,
-      customer_email: req.body?.email,
+## Question for you (so I guide perfectly)
+When you opened `api/create-checkout.js` in GitHub and clicked edit, did you see the part with:      customer_email: req.body?.email,
       success_url: `${process.env.BASE_URL}/success.html?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.BASE_URL}/report.html?cancel=1`,
       metadata: {
