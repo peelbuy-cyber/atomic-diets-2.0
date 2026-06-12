@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atomic Diets — Terms of Service</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    .doc{ padding:18px 0; }
+    .doc h2{ margin:0 0 10px; font-size:22px; font-weight:1000; }
+    .doc p{ color: var(--muted); font-weight:650; line-height:1.8; }
+    .doc h3{ margin:16px 0 8px; font-size:16px; font-weight:1000; }
+    .doc ul{ color: var(--muted); font-weight:650; line-height:1.8; }
+    .small{ font-size:12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="brandbar">
+      <div class="brand">
+        <div class="logo">AD</div>
+        <div>
+          <h1>Atomic Diets</h1>
+          <small>Terms of Service</small>
+        </div>
+      </div>
+      <button class="btn btn-ghost" type="button" onclick="location.href='./index.html'">
+        ← Home
+      </button>
+    </div>
+
+    <section class="card doc">
+      <div class="card-pad">
+        <h2>Terms of Service</h2>
+
+        <p>
+          These Terms of Service (“Terms”) govern your access to and use of Atomic Diets (“we”, “us”, “our”).
+          By using the platform, you agree to these Terms.
+        </p>
+
+        <h3>1) Educational use only</h3>
+        <p>
+          Atomic Diets provides AI-generated diet and workout recommendations for educational and planning purposes only.
+          These recommendations are not medical advice, diagnosis, or treatment. Always consult a qualified healthcare professional
+          before making health or medical decisions.
+        </p>
+
+        <h3>2) User responsibility</h3>
+        <p>
+          You are responsible for the accuracy of the information you submit to the platform.
+          You should stop exercising or change your plan if you experience pain, discomfort, or adverse effects.
+        </p>
+
+        <h3>3) Subscriptions and payments</h3>
+        <ul>
+          <li>Atomic Diets Pro is a subscription product.</li>
+          <li>Billing is handled by Stripe.</li>
+          <li>Payment schedules depend on the plan you choose (monthly or yearly).</li>
+          <li>You can cancel according to Stripe’s billing settings.</li>
+        </ul>
+
+        <h3>4) AI-generated content</h3>
+        <p>
+          AI may generate recommendations based on your inputs. Results vary by individual.
+          We do not guarantee specific outcomes.
+        </p>
+
+        <h3>5) Limitation of liability</h3>
+        <p>
+          To the maximum extent permitted by law, Atomic Diets is not liable for any indirect, incidental, special, or consequential damages
+          arising from your use of the platform.
+        </p>
+
+        <h3>6) Privacy</h3>
+        <p>
+          Please review our Privacy Policy to understand how we collect, use, and protect information.
+        </p>
+
+        <div class="divider"></div>
+        <p class="small">
+          Last updated: <span id="lastUpdated"></span>
+        </p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      © <span id="year"></span> Atomic Diets. All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('lastUpdated').textContent =
+      new Date().toLocaleDateString(undefined, { year:'numeric', month:'long', day:'numeric' });
+  </script>
+</body>
+</html>
