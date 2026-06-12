@@ -594,9 +594,15 @@
     //  ------- Pro status check (placeholder until dashboard wiring) -------
     // We will implement proper Firebase check in next step, but we’ll default to “Free”
     function userIsPro(){
-      // For now, assume Free. Later we will call /api/verify-payment + Firebase auth.
-      return false;
-    }
+  // MVP: teaser works without login.
+  // Full Pro will require login later once Firebase auth is fully working.
+  return false;
+}
+
+function requireLoginForPro(){
+  const url = './auth.html?next=' + encodeURIComponent('./dashboard.html');
+  location.href = url;
+}
 
     async function goCheckout(plan){
       // later we’ll call api/create-checkout
