@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atomic Diets — Pro Unlocked</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    .hero{
+      padding:26px 0 10px;
+      text-align:center;
+    }
+    .check{
+      width:64px;height:64px;
+      border-radius:18px;
+      margin:0 auto 12px;
+      background: rgba(16,185,129,.12);
+      border:1px solid rgba(16,185,129,.28);
+      display:grid; place-items:center;
+      color:#065f46;
+      font-size:30px;
+      font-weight:1000;
+    }
+    .center{
+      display:flex; flex-direction:column; align-items:center;
+      gap:12px;
+    }
+    .small{
+      color: var(--muted);
+      font-weight:700;
+      line-height:1.7;
+      font-size:13px;
+      max-width:520px;
+      margin:0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="brandbar">
+      <div class="brand">
+        <div class="logo">AD</div>
+        <div>
+          <h1>Atomic Diets</h1>
+          <small>Pro unlocked</small>
+        </div>
+      </div>
+      <button class="btn btn-ghost" type="button" onclick="location.href='./dashboard.html'">
+        Dashboard
+      </button>
+    </div>
+
+    <section class="hero">
+      <div class="check">✓</div>
+      <h2 style="margin:0; font-size:26px; line-height:1.2; font-weight:1000;">
+        Thank you — your Pro plan is unlocked!
+      </h2>
+      <p class="small">
+        You can now access your full meal plan, workout plan, grocery list and progress dashboard.
+      </p>
+
+      <div class="center" style="margin-top:16px;">
+        <button class="btn btn-primary" type="button" onclick="goDashboard()">
+          Go to my dashboard →
+        </button>
+        <div class="small" id="countdown">Redirecting in 5 seconds…</div>
+      </div>
+    </section>
+
+    <div class="card">
+      <div class="card-pad">
+        <h3 style="margin:0 0 8px; font-size:16px;">Having trouble?</h3>
+        <p class="small" style="text-align:left;">
+          If you don’t get access right away, don’t worry. Payments can take a short moment to confirm.
+          Please wait and then try refreshing, or go back to <a href="./auth.html">login</a> and open your dashboard.
+        </p>
+      </div>
+    </div>
+
+    <footer class="footer">
+      © <span id="year"></span> Atomic Diets. All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    let t = 5;
+    const el = document.getElementById('countdown');
+    const interval = setInterval(() => {
+      t -= 1;
+      if(el) el.textContent = `Redirecting in ${t} seconds…`;
+      if(t <= 0){
+        clearInterval(interval);
+        goDashboard();
+      }
+    }, 1000);
+
+    function goDashboard(){
+      location.href = './dashboard.html';
+    }
+  </script>
+</body>
+</html>
