@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atomic Diets — Login</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+
+  <style>
+    .two-col{ display:grid; gap:12px; grid-template-columns:1fr; }
+    @media(min-width:768px){ .two-col{ grid-template-columns:1fr 1fr; } }
+    .card-pad p{ margin:0; }
+    .brand-note{
+      color: var(--muted);
+      font-weight:700;
+      font-size:12px;
+      line-height:1.6;
+      margin-top:8px;
+    }
+    .form-actions{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;
+    }
+    .success{
+      display:none;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(16,185,129,.35);
+      background: rgba(16,185,129,.10);
+      color:#065f46;
+      font-weight:900;
+      margin-bottom:12px;
+    }
+    .error{
+      display:none;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(239,68,68,.32);
+      background: rgba(239,68,68,.10);
+      color:#7f1d1d;
+      font-weight:900;
+      margin-bottom:12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="brandbar">
+      <div class="brand">
+        <div class="logo">AD</div>
+        <div>
+          <h1>Atomic Diets</h1>
+          <small>Login to unlock your Pro plan</small>
+        </div>
+      </div>
+
+      <button class="btn btn-ghost" type="button" onclick="location.href='./index.html'">
+        ← Back
+      </button>
+    </div>
+
+    <div id="successBox" class="success">Success! Redirecting…</div>
+    <div id="errorBox" class="error">Something went wrong.</div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-pad">
+          <h2 style="margin:0 0 8px; font-size:18px;">Sign In</h2>
+          <p class="brand-note">Use Google or email/password.</p>
+
+          <div class="divider"></div>
+
+          <button class="btn btn-primary" type="button" id="googleBtn" style="width:100%;">
+            Continue with Google
+          </button>
+
+          <div class="divider"></div>
+
+          <div class="field">
+            <label>Email</label>
+            <input id="emailIn" type="email" placeholder="you@example.com" autocomplete="email">
+          </div>
+
+          <div class="field">
+            <label>Password</label>
+            <input id="passIn" type="password" placeholder="••••••••" autocomplete="current-password">
+          </div>
+
+          <div class="form-actions">
+            <button class="btn" type="button" id="signInBtn" style="flex:1; min-width:160px;">
+              Sign In
+            </button>
+            <button class="btn btn-ghost" type="button" id="goSignupBtn" style="flex:1; min-width:160px;">
+              I’m new
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="signupCard">
+        <div class="card-pad">
+          <h2 style="margin:0 0 8px; font-size:18px;">Create Account</h2>
+          <p class="brand-note">Get your free teaser report instantly.</p>
+
+          <div class="divider"></div>
+
+          <div class="field">
+            <label>Name</label>
+            <input id="nameUp" type="text" placeholder="Your name">
+          </div>
+
+          <div class="field">
+            <label>Email</label>
+            <input id="emailUp" type="email" placeholder="you@example.com" autocomplete="email">
+          </div>
+
+          <div class="field">
+            <label>Password</label>
+            <input id="passUp" type="password" placeholder="Create a password" autocomplete="new-password">
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="button" id="signUpBtn" style="flex:1; min-width:160px;">
+              Create Account
+            </button>
+            <button class="btn btn-ghost" type="button" id="goSigninBtn" style="flex:1; min-width:160px;">
+              I have an account
+            </button>
+          </div>
+
+          <div class="divider"></div>
+          <p class="brand-note">
+            Tip: After signup you’ll be taken to your report form.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs (NEVER use npm). We'll load from CDN. -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore-compat.js"></script>
+
+  <script>
+    // IMPORTANT:
+    // Replace these with your Firebase config you copied earlier.
+    // Keep it as an object exactly like firebaseConfig = { ... }.
+    // For now, you will NOT paste API keys here in chat.
+    // Instead, after deployment we will wire this in safely.
+
+    // We will set these values later after you paste firebaseConfig into the repo.
+    const firebaseConfig = {
+      apiKey: "PASTE_YOUR_FIREBASE_API_KEY",
+      authDomain: "PASTE_YOUR_FIREBASE_AUTH_DOMAIN",
+      projectId: "atomic-diets",
+      storageBucket: "PASTE_YOUR_FIREBASE_STORAGE_BUCKET",
+      messagingSenderId: "PASTE_YOUR_FIREBASE_MESSAGING_SENDER_ID",
+      appId: "PASTE_YOUR_FIREBASE_APP_ID"
+    };
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    const successBox = document.getElementById('successBox');
+    const errorBox = document.getElementById('errorBox');
+
+    function showError(msg){
+      errorBox.style.display = 'block';
+      errorBox.textContent = msg || "Something went wrong. Please try again.";
+    }
+    function showSuccess(){
+      successBox.style.display = 'block';
+    }
+    function goToReportAfterLogin(){
+      location.href = './report.html';
+    }
+
+    // Toggle signup/signin UI
+    const signupCard = document.getElementById('signupCard');
+    const goSignupBtn = document.getElementById('goSignupBtn');
+    const goSigninBtn = document.getElementById('goSigninBtn');
+    const signInBtn = document.getElementById('signInBtn');
+    const signUpBtn = document.getElementById('signUpBtn');
+
+    goSignupBtn.addEventListener('click', () => {
+      signupCard.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+
+    goSigninBtn.addEventListener('click', () => {
+      location.href = './auth.html';
+    });
+
+    async function signIn(){
+      try{
+        showError("");
+        const email = document.getElementById('emailIn').value.trim();
+        const pass = document.getElementById('passIn').value;
+
+        if(!email || !pass){
+          return showError("Please enter email and password.");
+        }
+
+        await auth.signInWithEmailAndPassword(email, pass);
+        showSuccess();
+        setTimeout(goToReportAfterLogin, 700);
+      }catch(e){
+        showError(e && e.message ? e.message : "Sign in failed.");
+      }
+    }
+
+    async function signUp(){
+      try{
+        const name = document.getElementById('nameUp').value.trim();
+        const email = document.getElementById('emailUp').value.trim();
+        const pass = document.getElementById('passUp').value;
+
+        if(!name || !email || !pass){
+          return showError("Please fill name, email and password.");
+        }
+
+        await auth.createUserWithEmailAndPassword(email, pass);
+
+        // Save basic user doc
+        const user = auth.currentUser;
+        if(user){
+          await db.collection('users').doc(user.uid).set({
+            uid: user.uid,
+            name,
+            email,
+            createdAt: Date.now(),
+            pro: false,
+            reportsThisMonth: 0,
+            reportResetDate: Date.now()
+          }, { merge: true });
+        }
+
+        showSuccess();
+        setTimeout(goToReportAfterLogin, 700);
+      }catch(e){
+        showError(e && e.message ? e.message : "Signup failed.");
+      }
+    }
+
+    signInBtn.addEventListener('click', signIn);
+    signUpBtn.addEventListener('click', signUp);
+
+    // Google sign-in
+    document.getElementById('googleBtn').addEventListener('click', async () => {
+      try{
+        const provider = new firebase.auth.GoogleAuthProvider();
+        await auth.signInWithPopup(provider);
+
+        showSuccess();
+        setTimeout(goToReportAfterLogin, 700);
+      }catch(e){
+        showError(e && e.message ? e.message : "Google sign-in failed.");
+      }
+    });
+
+    // If already logged in, skip auth page
+    auth.onAuthStateChanged((user) => {
+      if(user){
+        goToReportAfterLogin();
+      }
+    });
+  </script>
+</body>
+</html>
