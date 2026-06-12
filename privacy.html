@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atomic Diets — Privacy Policy</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    .doc{ padding:18px 0; }
+    .doc h2{ margin:0 0 10px; font-size:22px; font-weight:1000; }
+    .doc p{ color: var(--muted); font-weight:650; line-height:1.8; }
+    .doc h3{ margin:16px 0 8px; font-size:16px; font-weight:1000; }
+    .doc ul{ color: var(--muted); font-weight:650; line-height:1.8; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="brandbar">
+      <div class="brand">
+        <div class="logo">AD</div>
+        <div>
+          <h1>Atomic Diets</h1>
+          <small>Privacy Policy</small>
+        </div>
+      </div>
+      <button class="btn btn-ghost" type="button" onclick="location.href='./index.html'">
+        ← Home
+      </button>
+    </div>
+
+    <section class="card doc">
+      <div class="card-pad">
+        <h2>Privacy Policy</h2>
+        <p>
+          This Privacy Policy explains how Atomic Diets (“we”, “us”, “our”) collects, uses, and protects
+          information when you use our subscription health and fitness platform.
+        </p>
+
+        <h3>1) Information we collect</h3>
+        <p>
+          When you use Atomic Diets, you may provide information such as your name, age, gender, height, weight,
+          activity level, country, diet type, and workout timing. We may also collect account details from Firebase
+          Authentication (e.g., email) and payment status from Stripe.
+        </p>
+
+        <h3>2) How we use information</h3>
+        <ul>
+          <li>To generate your personalized diet and workout plan.</li>
+          <li>To provide subscription features and unlock Pro content.</li>
+          <li>To store your reports and progress in your account dashboard.</li>
+          <li>To improve our product experience and troubleshoot issues.</li>
+        </ul>
+
+        <h3>3) AI-generated content</h3>
+        <p>
+          Your inputs may be used to generate personalized recommendations using AI systems.
+          This is for educational and planning purposes and not medical advice.
+        </p>
+
+        <h3>4) Payment information</h3>
+        <p>
+          Stripe processes payments. We do not directly store your full payment card information.
+        </p>
+
+        <h3>5) Data storage and third parties</h3>
+        <p>
+          We use third-party services such as Firebase (authentication and database) and Stripe (billing).
+          These providers may store and process your data according to their own policies.
+        </p>
+
+        <h3>6) Your rights</h3>
+        <p>
+          Depending on your location, you may have rights to access, correct, or delete your personal data.
+          You can contact us to request assistance.
+        </p>
+
+        <h3>7) Contact</h3>
+        <p>
+          If you have questions about this Privacy Policy, contact us at:
+          <b>support@atomic-diets.example</b>
+        </p>
+
+        <div class="divider"></div>
+        <p style="font-size:12px;">
+          Last updated: <span id="lastUpdated"></span>
+        </p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      © <span id="year"></span> Atomic Diets. All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('lastUpdated').textContent =
+      new Date().toLocaleDateString(undefined, { year:'numeric', month:'long', day:'numeric' });
+  </script>
+</body>
+</html>
