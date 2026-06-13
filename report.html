@@ -600,10 +600,10 @@
 }
 
 function requireLoginForPro(){
-  const url = './auth.html?next=' + encodeURIComponent('./dashboard.html');
+  // After login, take them back to their report so they can unlock again
+  const url = './auth.html?next=' + encodeURIComponent('./report.html');
   location.href = url;
 }
-
     async function goCheckout(plan){
       // later we’ll call api/create-checkout
       alert("Checkout not wired yet. Next files will connect Stripe + Pro unlock.");
