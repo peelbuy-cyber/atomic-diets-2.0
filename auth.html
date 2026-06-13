@@ -175,9 +175,11 @@
     function showSuccess(){
       successBox.style.display = 'block';
     }
-    function goToReportAfterLogin(){
-      location.href = './report.html';
-    }
+   function goToReportAfterLogin(){
+  // After login, take them to dashboard so they can view their saved plan (once saving is wired)
+  location.href = './dashboard.html';
+}
+    
 
     // Toggle signup/signin UI
     const signupCard = document.getElementById('signupCard');
